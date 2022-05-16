@@ -1,66 +1,82 @@
-@extends("auth.layout")
+@extends("regular.base")
 
-
-@section("content")
-<div class="login-form-area">
-    <div class="login-form">
-
-        <div class="login-heading">
-            <span>Inscription</span>
-            <p>Commencez par créer votre compte</p>
+@section("main")
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+            <h6 class="section-title bg-white text-center text-primary px-3">Inscription</h6>
+            <h1 class="mb-5">Inscrivez-vous pour démarrer</h1>
         </div>
-
-        <form action="{{ route("register") }}" method="POST">
-            @csrf
-            <div class="input-box">
-                <div class="single-input-fields">
-                    <label>Nom et prénoms</label>
-                    <input type="text" name="lastname" required placeholder="Votre nom" value="{{ old("lastname") }}">
-                    @error("lastname")
-                    <span class="invalid-feedback" role="alert">
-                        <small style="color: red"><strong>{{ $message }}</strong></small>
-                    </span>
-                @enderror
-                    <input type="text" name="firstname" required placeholder="Votre/Vos prénom(s)" value="{{ old("firstname") }}">
-                    @error("firstname")
-                    <span class="invalid-feedback" role="alert">
-                        <small style="color: red"><strong>{{ $message }}</strong></small>
-                    </span>
-                @enderror
-                </div>
-
-                <div class="single-input-fields">
-                    <label>Adresse mail</label>
-                    <input type="email" name="email" placeholder="Votre adresse mail" value="{{ old("email") }}" required>
-                    @error("email")
-                    <span class="invalid-feedback" role="alert">
-                        <small style="color: red"><strong>{{ $message }}</strong></small>
-                    </span>
-                @enderror
-                </div>
-                <div class="single-input-fields">
-                    <label>Mot de passe</label>
-                    <input type="password" name="password" placeholder="Mot de passe" required autocomplete="new-password">
-                    @error("password")
-                    <span class="invalid-feedback" role="alert">
-                        <small style="color: red"><strong>{{ $message }}</strong></small>
-                    </span>
-                @enderror
-                </div>
-                <div class="single-input-fields">
-                    <label>Confirmez le mot de passe</label>
-                    <input type="password" name="password_confirmation" placeholder="Confirmez le mot de passe" required autocomplete="new-password">
-                </div>
+        <div class="row g-4">
+            <div class="col-lg-3">
 
             </div>
-
-            <div class="login-footer">
-                <p>Vous avez déjà un compte? <a href="{{ route('login') }}">Connectez-vous</a> ici</p>
-                <button class="submit-btn3" type="submit">Login</button>
+            <div class="col-lg-6 col-md-12 wow fadeInUp" data-wow-delay="0.5s">
+                <form action="{{ route("register") }}" method="POST">
+                    @csrf
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="text" class="form-control @error('lastname') is-invalid @enderror" required value="{{ old("lastname") }}" id="lastname" name="lastname" placeholder="Votre nom">
+                                <label for="lastname">Votre nom</label>
+                            </div>
+                        </div>
+                        @error('lastname')
+                            <div class="invalid-feedback" role="alert">
+                                <small><strong>{{ $message }}</strong></small>
+                            </div>
+                        @enderror
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="text" required value="{{ old("firstname") }}" class="form-control @error('firstname') is-invalid @enderror" id="firstname" name="firstname" placeholder="Votre prénom">
+                                <label for="firstname">Votre prénom</label>
+                            </div>
+                        </div>
+                        @error('firstname')
+                            <div class="invalid-feedback" role="alert">
+                                <small><strong>{{ $message }}</strong></small>
+                            </div>
+                        @enderror
+                        <div class="col-12">
+                            <div class="form-floating">
+                                <input type="email" name="email" name="email" class="form-control @error('email') is-invalid @enderror" id="email" required value="{{ old("email") }}"
+                                    placeholder="Adresse mail">
+                                <label for="email">Adresse mail</label>
+                            </div>
+                        </div>
+                        @error('email')
+                            <span class="invalid-feedback" role="alert">
+                                <small><strong>{{ $message }}</strong></small>
+                            </span>
+                        @enderror
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" id="password" placeholder="Mot de passe">
+                                <label for="password">Mot de passe</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="password" class="form-control" @error('password_confirmation') is-invalid @enderror id="password_confirmation" name="password_confirmation" placeholder="Confirmez le mot de passe">
+                                <label for="password_confirmation">Confirmez le mot de passe</label>
+                            </div>
+                        </div>
+                            @error('password')
+                            <div class="col-12 invalid-feedback" role="alert">
+                                <small><strong>{{ $message }}</strong></small>
+                            </div>
+                        @enderror
+                        <div class="col-12">
+                            <button class="btn btn-primary w-100 py-3" type="submit">S'inscrire</button>
+                        </div>
+                        <p>Avez-vous déjà un compte? <a href="{{ route('login') }}">Connectez-vous</a></p>
+                    </div>
+                </form>
             </div>
-        </form>
+            <div class="col-lg-3">
 
-
+            </div>
+        </div>
     </div>
 </div>
 @endsection

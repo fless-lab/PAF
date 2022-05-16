@@ -23,7 +23,8 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        Fortify::ignoreRoutes();
+
     }
 
     /**
@@ -33,7 +34,6 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Fortify::ignoreRoutes();
 
         Fortify::createUsersUsing(CreateNewUser::class);
         Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
@@ -46,12 +46,21 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::registerView(function(){
             return view('auth.register');
         });
+        Fortify::requestPasswordResetLinkView(function(){
+            return view("auth.forgot-password");
+        });
+        Fortify::resetPasswordView(function($request){
+            return view("auth.reset-password",["request"=>$request]);
+        });
+        Fortify::verifyEmailView(function(){
+            return view("auth.verify-email");
+        });
 
 
         Fortify::authenticateUsing(function(Request $request){
             $user = User::where("email",$request->username)->orWhere("username",$request->username)->first();
             if($user&&Hash::check($request->password, $user->password)){
-                return$user;
+                return $user;
             }
         });
 
